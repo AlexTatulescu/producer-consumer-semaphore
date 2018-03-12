@@ -5,16 +5,17 @@ public class Consumer extends Thread {
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
         while (true) {
-            SimulatePC.fullSemaphore.release();
-            SimulatePC.mutex.lock();
-            Integer item = SimulatePC.queue.remove(0);
-            consume(item);
-            SimulatePC.mutex.unlock();
             try {
-                SimulatePC.emptySemaphore.acquire();
+                SimulatePC.fullSemaphore.acquire();
             } catch (InterruptedException ie) {
                 System.out.println(ie.getMessage());
+                continue;
             }
+            SimulatePC.mutex.lock();
+            Integer item = SimulatePC.queue.removeFirst();
+            consume(item);
+            SimulatePC.mutex.unlock();
+            SimulatePC.emptySemaphore.release();
         }
     }
 

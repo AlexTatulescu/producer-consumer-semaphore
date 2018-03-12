@@ -1,15 +1,14 @@
 package ace.ucv.ro;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class SimulatePC {
-    public volatile static List<Integer> queue = new ArrayList<>();
+    public volatile static LinkedList<Integer> queue = new LinkedList<>();
     public static Semaphore fullSemaphore = new Semaphore(0);
-    public static Semaphore emptySemaphore = new Semaphore(2);
+    public static Semaphore emptySemaphore = new Semaphore(5);
     public static Lock mutex = new ReentrantLock();
 
     public static void main(String[] args) {

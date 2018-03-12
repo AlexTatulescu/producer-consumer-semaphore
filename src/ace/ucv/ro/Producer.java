@@ -14,16 +14,18 @@ public class Producer extends Thread {
     @SuppressWarnings("InfiniteLoopStatement")
     public void run() {
         while (true) {
-            SimulatePC.emptySemaphore.release();
-            SimulatePC.mutex.lock();
             Integer item = produceItem();
-            SimulatePC.queue.add(item);
-            SimulatePC.mutex.unlock();
             try {
-                SimulatePC.fullSemaphore.acquire();
+                SimulatePC.emptySemaphore.acquire();
             } catch (InterruptedException ie) {
                 System.out.println(ie.getMessage());
+                continue;
             }
+
+            SimulatePC.mutex.lock();
+            SimulatePC.queue.add(item);
+            SimulatePC.mutex.unlock();
+            SimulatePC.fullSemaphore.release();
         }
     }
 
