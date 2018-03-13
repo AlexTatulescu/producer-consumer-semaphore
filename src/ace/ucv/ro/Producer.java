@@ -19,13 +19,16 @@ public class Producer extends Thread {
                 SimulatePC.emptySemaphore.acquire();
             } catch (InterruptedException ie) {
                 System.out.println(ie.getMessage());
-                continue;
             }
-
             SimulatePC.mutex.lock();
             SimulatePC.queue.add(item);
             SimulatePC.mutex.unlock();
             SimulatePC.fullSemaphore.release();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                System.out.println(ie.getMessage());
+            }
         }
     }
 

@@ -16,8 +16,8 @@ public class SimulatePC {
         Producer producer = new Producer();
         Consumer consumer = new Consumer();
 
-        producer.run();
-        consumer.run();
+        producer.start();
+        consumer.start();
 
         try {
             producer.join();
