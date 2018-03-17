@@ -9,13 +9,14 @@ public class Consumer extends Thread {
                 SimulatePC.fullSemaphore.acquire();
             } catch (InterruptedException ie) {
                 System.out.println(ie.getMessage());
+                continue;
             }
             SimulatePC.mutex.lock();
             Integer item = SimulatePC.queue.removeFirst();
-            consume(item);
             SimulatePC.mutex.unlock();
             SimulatePC.emptySemaphore.release();
             try {
+                consume(item);
                 Thread.sleep(2000);
             } catch (InterruptedException ie) {
                 System.out.println(ie.getMessage());
